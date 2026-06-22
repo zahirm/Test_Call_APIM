@@ -148,10 +148,12 @@ if ($Trace) { $reqHeaders['Ocp-Apim-Trace'] = 'true' }
 $tokenInfo = Get-TokenSummary $Token
 
 Write-Section "REQUEST"
+$subscriptionKeyState = if ($SubscriptionKey) { 'present' } else { 'NOT SET' }
+$tokenState = if ($Token) { 'present' } else { 'NOT SET' }
 Write-Host ("  {0,-14}: {1}" -f 'Method', $Method)
 Write-Host ("  {0,-14}: {1}" -f 'URL', $Url)
-Write-Host ("  {0,-14}: {1}" -f 'Sub key', (if ($SubscriptionKey) { 'present' } else { 'NOT SET' }))
-Write-Host ("  {0,-14}: {1}" -f 'Bearer token', (if ($Token) { 'present' } else { 'NOT SET' }))
+Write-Host ("  {0,-14}: {1}" -f 'Sub key', $subscriptionKeyState)
+Write-Host ("  {0,-14}: {1}" -f 'Bearer token', $tokenState)
 if ($Headers) { Write-Host ("  {0,-14}: {1}" -f 'Custom hdrs', (($Headers.Keys) -join ', ')) }
 if ($IgnoreCertErrors) { Write-Host "  Cert check    : DISABLED (testing only)" -ForegroundColor Yellow }
 
